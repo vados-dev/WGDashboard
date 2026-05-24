@@ -98,7 +98,7 @@ LABEL maintainer="vados@vados.ru"
 RUN apk add --no-cache \
     iproute2 iptables \
     bash curl procps openrc \
-    tzdata wireguard-tools envsubst
+    tzdata wireguard-tools envsubst mc
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Copy only the final binaries from the AWG builder stages
@@ -107,11 +107,11 @@ COPY --from=awg-tools /workspace/awg-tools/src/wg /usr/bin/awg
 COPY --from=awg-tools /workspace/awg-tools/src/wg-quick/linux.bash /usr/bin/awg-quick
 
 # Environment variables
-ARG wg_net="10.8.0.0"
+ARG wg_net="10.8.0.1"
 ARG wg_subn="24"
 ARG wg_port="51820"
 ENV TZ="Europe/Amsterdam" \
-    global_dns="8.8.8.8, 1.1.1.1, 9.9.9.9" \
+    global_dns="8.8.8.8" \
     wgd_port="10086" \
     public_ip="0.0.0.0" \
     WGDASH=/opt/wgdashboard \
