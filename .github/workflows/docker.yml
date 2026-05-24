@@ -1,7 +1,6 @@
 name: Docker Build and Push
 
 on:
-  workflow_dispatch:
 #  push:
 #    branches:
 #      - 'main'
@@ -15,10 +14,30 @@ on:
 #  release:
 #    types: [ published ]
 
+  workflow_dispatch:
+    inputs:
+#      build_image:
+#        description: "Image name for buld."
+#        required: true
+#        default: "ghcr.io/vados-dev/wg-easy"
+#        type: string
+#      build_tag:
+#        description: "Build tag for the Docker image"
+#        required: true
+#        default: "rb14lts"
+#        type: string
+      build_platforms:
+        description: "Build platforms e.g.
+          (linux/amd64,linux/arm64,linux/arm/v7)"
+        required: true
+        default: "linux/amd64"
+        type: string
+
 env:
   DOCKERHUB_PREFIX: docker.io
   GITHUB_CONTAINER_PREFIX: ghcr.io
   DOCKER_IMAGE: WGDashboard
+  DEFAULT_PLATFORMS: linux/amd64
 
 jobs:
   docker_build:
@@ -73,7 +92,7 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          platforms: linux/amd64,linux/arm64,linux/arm/v7
+          platforms: ${{ github.event.inputs.build_platforms || env.DEFAULT_PLATFORMS }}
 
   docker_scan:
     if: ${{ github.event_name != 'pull_request' }}
