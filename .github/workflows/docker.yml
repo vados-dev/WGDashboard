@@ -93,6 +93,17 @@ jobs:
             type=ref,event=branch
             type=ref,event=tag
             type=sha,format=short,prefix=
+            type=semver,pattern={{version}}
+          flavor: |
+            latest=true
+          labels: |
+            maintainer=${{ github.repository_owner }}
+            org.opencontainers.image.created={{commit_date 'YYYY-MM-DDTHH:mm:ss.SSS[Z]'}}
+            org.opencontainers.image.revision={{commit_short}}
+            org.opencontainers.image.version={{version}}
+            org.opencontainers.image.url={{url}}
+            org.opencontainers.image.source={{url}}
+            org.opencontainers.image.documentation={{url}}
 
       - name: Build and export Docker image
         uses: docker/build-push-action@v6
