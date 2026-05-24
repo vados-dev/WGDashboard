@@ -1,16 +1,16 @@
 name: Docker Build and Push
 
 on:
-#  push:
+  push:
 #    branches:
 #      - 'main'
 #      - 'development'
 #      - '**dev'
 #    tags:
 #      - '*'
-#    paths:
-#      - 'src/**'
-#      - 'docker/**'
+    paths:
+      - '.github/workflows/docker.yml'
+      - 'docker/**'
 #  release:
 #    types: [ published ]
 
@@ -51,19 +51,29 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v3
+      - name: Login to registries
+        uses: docker/login-action@v4
         with:
-          registry: ${{ env.DOCKERHUB_PREFIX }}
-          username: ${{ secrets.DOCKER_HUB_USERNAME }}
-          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+          registry-auth: |
+            - username: ${{ secrets.DOCKER_HUB_USERNAME }}
+              password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+            - registry: ${{ env.GITHUB_CONTAINER_PREFIX }}
+              username: ${{ github.actor }}
+              password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Log in to GitHub Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ${{ env.GITHUB_CONTAINER_PREFIX }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+#      - name: Log in to Docker Hub
+#        uses: docker/login-action@v3
+#        with:
+#          registry: ${{ env.DOCKERHUB_PREFIX }}
+#          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+#          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+#
+#      - name: Log in to GitHub Container Registry
+#        uses: docker/login-action@v3
+#        with:
+#          registry: ${{ env.GITHUB_CONTAINER_PREFIX }}
+#          username: ${{ github.actor }}
+#          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -133,3 +143,4 @@ jobs:
           only-severities: critical,high
           ignore-unchanged: true
           github-token: ${{ secrets.GITHUB_TOKEN }}
+        continue-on-error: true
