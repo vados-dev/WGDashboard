@@ -107,12 +107,12 @@ COPY --from=awg-tools /workspace/awg-tools/src/wg /usr/bin/awg
 COPY --from=awg-tools /workspace/awg-tools/src/wg-quick/linux.bash /usr/bin/awg-quick
 
 # Environment variables
-ARG wg_net="10.8.0.1"
+ARG wg_net="10.8.0.0"
 ARG wg_subn="24"
-ARG wg_port="29185"
+ARG wg_port="51820"
 ENV TZ="Europe/Amsterdam" \
-    global_dns="8.8.8.8, 8.8.4.4, 1.1.1.1, 9.9.9.9" \
-    wgd_port="8588" \
+    global_dns="8.8.8.8, 1.1.1.1, 9.9.9.9" \
+    wgd_port="10086" \
     public_ip="0.0.0.0" \
     WGDASH=/opt/wgdashboard \
     dynamic_config="true"
@@ -142,7 +142,7 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
   CMD sh -c 'pgrep gunicorn > /dev/null && pgrep tail > /dev/null' || exit 1
 
 # Expose ports on the container
-EXPOSE 8588
+EXPOSE 10086
 WORKDIR $WGDASH/src
 
 ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
