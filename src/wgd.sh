@@ -1,5 +1,4 @@
 #!/bin/bash
-
 # wgd.sh - Copyright(C) 2024 Donald Zou [https://github.com/donaldzou]
 # Under Apache-2.0 License
 #trap "kill $TOP_PID"
