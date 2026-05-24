@@ -2,18 +2,18 @@ name: Docker Build and Push
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - 'main'
-      - 'development'
-      - '**dev'
-    tags:
-      - '*'
-    paths:
-      - 'src/**'
-      - 'docker/**'
-  release:
-    types: [ published ]
+#  push:
+#    branches:
+#      - 'main'
+#      - 'development'
+#      - '**dev'
+#    tags:
+#      - '*'
+#    paths:
+#      - 'src/**'
+#      - 'docker/**'
+#  release:
+#    types: [ published ]
 
 env:
   DOCKERHUB_PREFIX: docker.io
