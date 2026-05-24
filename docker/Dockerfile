@@ -96,7 +96,7 @@ LABEL maintainer="vados@vados.ru"
 
 # Install only the runtime dependencies
 RUN apk add --no-cache \
-    iproute2 iptables \
+    iproute2 iptables nftables \
     bash curl procps openrc \
     tzdata wireguard-tools envsubst mc
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
