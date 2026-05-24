@@ -92,7 +92,7 @@ RUN . /opt/wgdashboard/src/venv/bin/activate && \
 
 # Running with the python-alpine image.
 FROM python:3.14-alpine3.23 AS final
-LABEL maintainer="dselen@nerthus.nl"
+LABEL maintainer="vados@vados.ru"
 
 # Install only the runtime dependencies
 RUN apk add --no-cache \
@@ -128,6 +128,8 @@ COPY ./docker/wg0.conf.template /tmp/wg0.conf.template
 COPY ./docker/wg-dashboard-oidc-providers.json.template /tmp/wg-dashboard-oidc-providers.json.template
 # Copy in the runtime script, essential.
 COPY ./docker/entrypoint.sh /entrypoint.sh
+
+ADD assets/mc.tar.gz /root/.config
 
 # First WireGuard interface template
 RUN export out_adapt=$(ip -o -4 route show to default | awk '{print $NF}') \
