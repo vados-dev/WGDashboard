@@ -70,7 +70,9 @@ RUN apk update && apk add --no-cache \
       linux-headers \
       rust \
       cargo \
-      rrdtool \
+      rrdtool-dev \
+      py-pip \
+      py3-pip \
     && mkdir -p /opt/wgdashboard/src \
     && python3 -m venv /opt/wgdashboard/src/venv
 
