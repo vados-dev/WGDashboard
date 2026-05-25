@@ -60,9 +60,8 @@ FROM python:3.14-alpine3.23 AS pip-builder
 ARG TARGETPLATFORM
 
 # Add the build dependencies and create a Python virtual environment.
-RUN apk add --no-cache \
+RUN apk update && apk add --no-cache \
       build-base \
-      build-essential \
       pkgconfig \
       python3-dev \
       postgresql-dev \
@@ -71,6 +70,7 @@ RUN apk add --no-cache \
       linux-headers \
       rust \
       cargo \
+      rrdtool \
     && mkdir -p /opt/wgdashboard/src \
     && python3 -m venv /opt/wgdashboard/src/venv
 
@@ -84,7 +84,6 @@ RUN if [ "$TARGETPLATFORM" = "linux/arm/v7" ]; then \
 # Install the pip packages
 RUN . /opt/wgdashboard/src/venv/bin/activate && \
     pip3 install --upgrade pip && \
-    pip3 install rrdtool && \
     pip3 install -r /opt/wgdashboard/src/requirements.txt
 
 #
@@ -97,9 +96,9 @@ FROM python:3.14-alpine3.23 AS final
 LABEL maintainer="vados@vados.ru"
 
 # Install only the runtime dependencies
-RUN apk add --no-cache \
+RUN apk update && apk add --no-cache \
     iproute2 iptables nftables \
-    bash curl procps openrc \
+    bash curl procps openrc rrdtool \
     tzdata wireguard-tools envsubst mc
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
