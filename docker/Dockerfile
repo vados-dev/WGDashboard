@@ -70,9 +70,6 @@ RUN apk update && apk add --no-cache \
       linux-headers \
       rust \
       cargo \
-      rrdtool-dev \
-      py-pip \
-      py3-pip \
     && mkdir -p /opt/wgdashboard/src \
     && python3 -m venv /opt/wgdashboard/src/venv
 
@@ -100,7 +97,7 @@ LABEL maintainer="vados@vados.ru"
 # Install only the runtime dependencies
 RUN apk update && apk add --no-cache \
     iproute2 iptables \
-    bash curl procps openrc rrdtool \
+    bash curl procps openrc \
     tzdata wireguard-tools envsubst mc
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
