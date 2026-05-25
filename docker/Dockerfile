@@ -70,7 +70,6 @@ RUN apk add --no-cache \
       linux-headers \
       rust \
       cargo \
-      rrdtool \
     && mkdir -p /opt/wgdashboard/src \
     && python3 -m venv /opt/wgdashboard/src/venv
 
@@ -84,6 +83,7 @@ RUN if [ "$TARGETPLATFORM" = "linux/arm/v7" ]; then \
 # Install the pip packages
 RUN . /opt/wgdashboard/src/venv/bin/activate && \
     pip3 install --upgrade pip && \
+    pip3 install rrdtool && \
     pip3 install -r /opt/wgdashboard/src/requirements.txt
 
 #
