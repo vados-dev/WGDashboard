@@ -70,6 +70,7 @@ RUN apk add --no-cache \
       linux-headers \
       rust \
       cargo \
+      rrdtool \
     && mkdir -p /opt/wgdashboard/src \
     && python3 -m venv /opt/wgdashboard/src/venv
 
