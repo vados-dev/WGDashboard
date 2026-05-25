@@ -30,14 +30,14 @@ on:
         description: "Build platforms e.g.
           (linux/amd64,linux/arm64,linux/arm/v7)"
         required: true
-        default: "linux/amd64"
+        default: "linux/amd64,linux/arm64,linux/arm/v7"
         type: string
 
 env:
   DOCKERHUB_PREFIX: docker.io
   GITHUB_CONTAINER_PREFIX: ghcr.io
   DOCKER_IMAGE: WGDashboard
-  DEFAULT_PLATFORMS: linux/amd64
+  DEFAULT_PLATFORMS: linux/amd64,linux/arm64,linux/arm/v7
 
 jobs:
   docker_build:
