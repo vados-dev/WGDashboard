@@ -62,6 +62,7 @@ ARG TARGETPLATFORM
 # Add the build dependencies and create a Python virtual environment.
 RUN apk add --no-cache \
       build-base \
+      build-essential \
       pkgconfig \
       python3-dev \
       postgresql-dev \
