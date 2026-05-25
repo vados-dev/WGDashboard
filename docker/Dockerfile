@@ -4,10 +4,10 @@
 #
 
 # Pull the current golang-alpine image.
-FROM golang:1.26-alpine3.23 AS awg-go
+FROM golang:alpine AS awg-go
 
 # Install build-dependencies.
-RUN apk add --no-cache \
+RUN apk update && apk add --no-cache \
     git \
     gcc \
     musl-dev
@@ -30,10 +30,10 @@ RUN go version && \
 # AWG TOOLS BUILDING STAGE
 # Base: Alpine
 #
-FROM alpine:3.23 AS awg-tools
+FROM alpine AS awg-tools
 
 # Install needed dependencies.
-RUN apk add --no-cache \
+RUN apk update && apk add --no-cache \
     make \
     git \
     build-base \
@@ -55,7 +55,7 @@ RUN make && chmod +x wg*
 #
 
 # Use the python-alpine image for building pip dependencies
-FROM python:3.14-alpine3.23 AS pip-builder
+FROM python:alpine AS pip-builder
 
 ARG TARGETPLATFORM
 
@@ -92,12 +92,12 @@ RUN . /opt/wgdashboard/src/venv/bin/activate && \
 #
 
 # Running with the python-alpine image.
-FROM python:3.14-alpine3.23 AS final
+FROM python:alpine AS final
 LABEL maintainer="vados@vados.ru"
 
 # Install only the runtime dependencies
 RUN apk update && apk add --no-cache \
-    iproute2 iptables nftables \
+    iproute2 iptables \
     bash curl procps openrc rrdtool \
     tzdata wireguard-tools envsubst mc
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]

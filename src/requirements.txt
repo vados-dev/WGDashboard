@@ -15,4 +15,3 @@ PyMySQL==1.1.2
 tzlocal==5.3.1
 python-jose==3.5.0
 pydantic==2.12.5
-rrdtool==0.1.1
